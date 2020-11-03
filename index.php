@@ -1,35 +1,21 @@
 <?php
-$servername = "localhost";
+$server_name = "localhost";
 $username = "root";
 $password = "root";
 $database = "sqlHeroes";
 
 // Create connection
-$conn = new mysqli($servername, $username, $password, $database);
+$conn = new mysqli($server_name, $username, $password, $database);
 
 // Check connection
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
-//total list of heroes
-$list_of_heroes = "SELECT name FROM heroes";
-$result = $conn->query($list_of_heroes);
-
-$output = "";
-
-if ($result -> num_rows > 0) {
-    // output data of each row
-    while ($row = $result -> fetch_assoc()) {
-        $output .= "<li>" . "<a href='#'>" . $row["name"] . "</a>" . "</li>";
-    }
-} else {
-    echo "0 results";
-}
-
-mysqli_close($conn);
 ?>
 
-
+<?php
+    include './pages/heroesList.php';
+?>
 
 <!doctype html>
 <html lang="en">
@@ -45,14 +31,22 @@ mysqli_close($conn);
 </head>
 
 <body>
-    <h1>City of Heroes</h1>
+    <h1 class="display-3">City of Heroes</h1>
     <ul>
-
         <?php
-            echo $output;
+        echo $list_output;
         ?>
-
     </ul>
+
+    <div class="jumbotron">
+        <h1 class="display-3"><?php ?></h1>
+        <p class="lead"><?php ?></p>
+        <hr class="my-2">
+        <p><?php ?></p>
+        <p class="lead">
+            <a class="btn btn-primary btn-lg" href="Jumbo action link" role="button"><?php ?></a>
+        </p>
+    </div>
 
     <!-- 
         profile of selected hero/heroine

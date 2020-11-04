@@ -14,7 +14,9 @@ if ($conn->connect_error) {
 ?>
 
 <?php
-    include './pages/heroesList.php';
+include './pages/heroesList.php';
+include './pages/heroCreate.php';
+include './pages/heroProfile.php';
 ?>
 
 <!doctype html>
@@ -31,29 +33,92 @@ if ($conn->connect_error) {
 </head>
 
 <body>
+    <!-- Header -->
     <h1 class="display-3">City of Heroes</h1>
+    <!-- Table of Contents -->
     <ul>
         <?php
         echo $list_output;
         ?>
     </ul>
-
+    <!-- Current Hero Profile -->
     <div class="jumbotron">
-        <h1 class="display-3"><?php ?></h1>
-        <p class="lead"><?php ?></p>
-        <hr class="my-2">
-        <p><?php ?></p>
-        <p class="lead">
-            <a class="btn btn-primary btn-lg" href="Jumbo action link" role="button"><?php ?></a>
-        </p>
+        <?php
+        echo $_output;
+        ?>
     </div>
 
+
     <!-- 
-        profile of selected hero/heroine
 
         button to add relationship
 
-        form to add new hero/heroine -->
+        form to add new hero/heroine 
+        POST
+    
+    -->
+
+    
+
+    <h2 class="display-5">Add A New Hero</h2>
+
+    <form>
+        <div class="form-group">
+            <label for="exampleFormControlInput1">Name</label>
+            <input class="form-control" id="exampleFormControlInput1">
+        </div>
+        <!-- populate from abilities table -->
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+            <label class="form-check-label" for="inlineCheckbox1">1</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
+            <label class="form-check-label" for="inlineCheckbox2">2</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3">
+            <label class="form-check-label" for="inlineCheckbox3">3</label>
+        </div>
+        <!-- populated from heroes names -->
+        <div class="form-group">
+            <label for="exampleFormControlSelect2">Allies</label>
+            <select multiple class="form-control" id="exampleFormControlSelect2">
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+            </select>
+        </div>
+        <!-- populated from heroes names -->
+        <div class="form-group">
+            <label for="exampleFormControlSelect1">Arch Enemy</label>
+            <select class="form-control" id="exampleFormControlSelect1">
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="exampleFormControlTextarea1">About Me</label>
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="exampleFormControlTextarea1">Biography
+            </label>
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="exampleFormControlFile1">Upload Profile Photo</label>
+            <input type="file" class="form-control-file" id="exampleFormControlFile1">
+        </div>
+    </form>
+
+
+
 
 
     <!-- Optional JavaScript -->

@@ -10,10 +10,13 @@
 
 //get relationships of given hero
 
-//get hero profile
+//set relationship between given hero A and given hero B
+
+//get hero profile JSON from DB
+//process JSON to use in PHP
 
 
 //delete hero
-
+//POST delete command to DB
 
 ?>

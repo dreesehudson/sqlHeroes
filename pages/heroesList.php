@@ -22,7 +22,7 @@ $list_output = "<ul>";
 if ($result->num_rows > 0) {
     // list_output data of each row, GET PHP applied to links
     while ($row = $result->fetch_assoc()) {
-        $list_output .= "<li>" . '<a href="/pages/heroProfile.php?state=profile&id=' . $row["id"] . '">' . $row["name"] . "</a>" . "</li>";
+        $list_output .= "<li>" . '<a href="/pages/heroProfile.php?id=' . $row["id"] . '">' . $row["name"] . "</a>" . "</li>";
     }
 } else {
     echo "list 0 results";

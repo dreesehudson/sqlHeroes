@@ -42,8 +42,9 @@ if ($conn->connect_error) {
     $hero = $conn->query($hero_sql);
     if ($hero->num_rows > 0) {
         while ($row = $hero->fetch_assoc()) { ?>
-            <div class="jumbotron-fluid">
-                <img src=<?php $row['image_url']; ?> alt=<?php $row['name']; ?></img> <h1 class='display-3'><?php echo $row['name']; ?></h1>
+            <div class="jumbotron">
+                <img src=<?php $row['image_url']; ?> alt=<?php $row['name']; ?>/>
+                <h1 class='display-3'><?php echo $row['name']; ?></h1>
                 <p><?php echo $row['about_me']; ?></p>
                 <hr class='my-2'>
                 <p><?php echo $row['biography']; ?></p>

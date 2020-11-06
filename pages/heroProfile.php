@@ -49,21 +49,20 @@ if ($conn->connect_error) {
     //var_dump($ability);
 
     //current Hero's Allies
-    $ally_sql = "SELECT name FROM heroes WHERE heroes.id IN
-    (SELECT hero2_id FROM relationships WHERE hero1_id = $_GET[id] AND type_id='1')";
+    $ally_sql = "SELECT name, id, image_url FROM heroes WHERE heroes.id 
+    IN (SELECT hero2_id FROM relationships WHERE hero1_id = $_GET[id] AND type_id='1')";
     $ally = $conn->query($ally_sql);
-    var_dump($ally);
 
     //current Hero's Enemies
-    $enemy_sql = "SELECT name FROM heroes WHERE heroes.id IN
-    (SELECT hero2_id FROM relationships WHERE hero1_id = $_GET[id] AND type_id='2')";
+    $enemy_sql = "SELECT name, id, image_url FROM heroes WHERE heroes.id 
+    IN (SELECT hero2_id FROM relationships WHERE hero1_id = $_GET[id] AND type_id='2')";
     $enemy = $conn->query($enemy_sql);
 
     if ($hero->num_rows > 0) {
         while ($hero_row = $hero->fetch_assoc()) { ?>
 
             <div class="jumbotron">
-                <img src='<?php echo $hero_row['image_url']; ?>' alt='<?php echo $hero_row['name']; ?>' />
+                <img class="rounded" src='<?php echo $hero_row['image_url']; ?>' alt='<?php echo $hero_row['name']; ?>' />
                 <h1 class='display-3'><?php echo $hero_row['name']; ?></h1>
                 <p><?php echo $hero_row['about_me']; ?></p>
                 <hr class='my-2'>
@@ -92,7 +91,9 @@ if ($conn->connect_error) {
                             if ($ally->num_rows > 0) {
                                 // list_output data of each row, GET PHP applied to links
                                 while ($ally_row = $ally->fetch_assoc()) {
-                                    echo $ally_output = '<li><a href="/pages/heroProfile.php?id=' . $ally_row["id"] . '">' . $ally_row["name"] . "</a></li>";
+                                    echo $ally_output = '<li>
+                                    <img class="rounded mb-1" src=' . $ally_row['image_url'] . ' alt=' . $ally_row['name'] . ' />
+                                    <a href="/pages/heroProfile.php?id="' . $ally_row["id"] . ' ">' . $ally_row["name"] . "</a></li>";
                                 }
                             } else {
                                 echo "No Allies";
@@ -107,7 +108,9 @@ if ($conn->connect_error) {
                             if ($enemy->num_rows > 0) {
                                 // list_output data of each row, GET PHP applied to links
                                 while ($enemy_row = $enemy->fetch_assoc()) {
-                                    echo $enemy_output = '<li><a href="/pages/heroProfile.php?id=' . $enemy_row["id"] . '">' . $enemy_row["name"] . "</a>" . "</li>";
+                                    echo $enemy_output = '<li>
+                                    <img class="rounded mb-1" src=' . $enemy_row['image_url'] . ' alt=' . $enemy_row['name'] . ' />
+                                    <a href="/pages/heroProfile.php?id="' . $enemy_row["id"] . ' ">' . $enemy_row["name"] . "</a></li>";
                                 }
                             } else {
                                 echo "No Enemies";
@@ -119,27 +122,28 @@ if ($conn->connect_error) {
 
                     <div class="col-6">
                         <h5>Make New Allies or Enemies</h5>
-                        <form>
+                        <form action='<?php echo $_SERVER['PHP_SELF']; ?>' method='post'>
+                        <input type="hidden" name="hero1_id" value="<?php $_GET['id']?> ">
                             <div class="form-row">
                                 <div class="form-group col-md-4">
-                                    <select id="inputState" class="form-control">
+                                    <select name='hero2_id' id="inputState" class="form-control">
                                         <option selected>Choose...</option>
                                         <?php
                                         //list items of all the heroes in the database
-                                        $list_of_names = "SELECT name FROM heroes";
+                                        $list_of_names = "SELECT name, id FROM heroes";
                                         $feedback = $conn->query($list_of_names);
                                         if ($feedback->num_rows > 0) {
                                             // list_output data of each row, GET PHP applied to links
                                             while ($row = $feedback->fetch_assoc()) {
-                                                echo $names_output = "<option>" . $row['name'] . "</option>";
+                                                echo $names_output = "<option id=" . $row['id'] . ">" . $row['name'] . "</option>";
                                             }
                                         }
                                         ?>
                                     </select>
                                 </div>
                             </div>
-                            <button type="submit" class="btn btn-success">Add Ally</button>
-                            <button type="submit" class="btn btn-danger">Add Enemy</button>
+                            <input value="Add Ally" name='ally' type="submit" class="btn btn-success"/>
+                            <input value="Add Enemy" name='enemy' type="submit" class="btn btn-danger"/>
                         </form>
                     </div>
             <?php }
@@ -148,6 +152,40 @@ if ($conn->connect_error) {
     }
             ?>
 
+
+            <?php
+            $server_name = "localhost";
+            $username = "root";
+            $password = "root";
+            $database = "sqlHeroes";
+
+            // Create connection
+            $conn = new mysqli($server_name, $username, $password, $database);
+
+            // Check connection
+            if ($conn->connect_error) {
+                die("Connection failed: " . $conn->connect_error);
+            }
+            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                $hero2_id = $_POST['hero2_id'];
+                $hero1_id = $_POST['hero1_id'];
+                $relationshipType = 1;
+                if (isset ($_POST['enemy'])){
+                    $relationshipType = 2;
+                } 
+                if (empty($hero2_id)) {
+                    echo 'new relationship is empty';
+                } else {
+                    //echo $name . "<br>" . $about . "<br>" . $bio;
+                }
+                $sql = "INSERT INTO relationships (name)
+                        VALUES('$hero1_id', '$hero2_id', '$relationshipType')";
+                        var_dump($sql);
+                if ($conn->query($sql) === TRUE) {
+                    echo 'New relationship created successfully';
+                }
+            }
+            ?>
 
             <!-- Optional JavaScript -->
             <!-- jQuery first, then Popper.js, then Bootstrap JS -->

@@ -55,9 +55,6 @@ if ($conn->connect_error) {
             ?>
 
         </div>
-
-        </div>
-
         <div class="form-group">
             <h5 class="display-5 pt-3" for="exampleFormControlSelect2">Allies: Can Choose Multiple</h5>
             <select multiple class="form-control" id="exampleFormControlSelect1">
@@ -77,6 +74,7 @@ if ($conn->connect_error) {
         <div class="form-group">
             <h5 class="display-5 mt-3" for="exampleFormControlSelect1">Arch Enemy</h5>
             <select class="form-control" id="exampleFormControlSelect2">
+                <option>Choose One...</option>"
                 <?php
                 //list items of all the heroes in the database
                 $list_of_names = "SELECT name FROM heroes";

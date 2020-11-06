@@ -16,7 +16,7 @@ if ($conn->connect_error) {
 
 <?php
 //list items of all the heroes in the database
-$list_of_heroes = "SELECT id, name, image_url FROM heroes";
+$list_of_heroes = "SELECT DISTINCT id, name, image_url FROM heroes";
 $result = $conn->query($list_of_heroes);
 $list_output = "<ul>";
 if ($result->num_rows > 0) {

@@ -44,7 +44,8 @@ include './pages/heroesList.php';
 
 
     <footer class="fixed-bottom">
-        <a href="/pages/heroCreate.php" class="btn btn-white text-white">Admin</a>
+        <a href="/pages/heroCreate.php" class="btn btn-white text-white">Add</a>
+        <a href="/pages/heroRemove.php" class="btn btn-white text-white">Remove</a>
     </footer>
 
     <!-- Optional JavaScript -->
